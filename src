@@ -1,0 +1,63 @@
+#----->clustering practice<-------
+
+import numpy as np 
+import pandas as pd 
+import matplotlib.pyplot as plt
+import sklearn 
+from sklearn.cluster import KMeans
+from mpl_toolkits.mplot3d import Axes3D
+from sklearn.preprocessing import scale
+import sklearn.metrics as sm
+from sklearn import datasets
+from sklearn.datasets import make_blobs
+from sklearn.metrics import confusion_matrix, classification_report
+%matplotlib inline
+
+dataset = make_blobs (n_samples = 200, centers=4, n_features= 2, cluster_std=1.6, random_state = 50)
+
+points = dataset[0]
+
+kmeans = KMeans(n_clusters = 4)
+kmeans.fit(points)
+
+plt.scatter(dataset[0][:,0], dataset[0][:,1])
+
+clusters = kmeans.cluster_centers_
+
+print(clusters)
+
+y_km = kmeans.fit_predict(points)
+
+plt.scatter(clusters[0][0],clusters[0][1],marker='^', s=200,color='black')
+plt.scatter(clusters[1][0],clusters[1][1],marker='^', s=200,color='black')
+plt.scatter(clusters[2][0],clusters[2][1],marker='^', s=200,color='black')
+plt.scatter(clusters[3][0],clusters[3][1],marker='^', s=200,color='black')
+
+plt.scatter(points[y_km==0,0],points[y_km==0,1],s=40,color='red')
+plt.scatter(points[y_km==1,0],points[y_km==1,1],s=40,color='blue')
+plt.scatter(points[y_km==2,0],points[y_km==2,1],s=40,color='yellow')
+plt.scatter(points[y_km==3,0],points[y_km==3,1],s=40,color='green')
+
+dataset = make_blobs (n_samples = 200, n_features = 2, centers = 4, cluster_std = 1.6, random_state = 50 )
+
+point1 = dataset[0]
+
+import scipy.cluster.hierarchy  as sch 
+from sklearn.cluster import AgglomerativeClustering
+
+dendrgram = sch.dendrogram(sch.linkage(point1, method='ward'))
+
+hc = AgglomerativeClustering(n_clusters = 4, affinity ='euclidean', linkage='ward')
+
+y_hc = hc.fit_predict(point1)
+
+plt.scatter(point1[y_hc==0,0], point1[y_hc==0,1],s=100,c='yellow')
+plt.scatter(point1[y_hc==1,0], point1[y_hc==1,1],s=100,c='red')
+plt.scatter(point1[y_hc==2,0], point1[y_hc==2,1],s=100,c='green')
+plt.scatter(point1[y_hc==3,0], point1[y_hc==3,1],s=100,c='cyan')
+
+plt.scatter(clusters[0][0],clusters[0][1],marker='^', s=200,color='black')
+plt.scatter(clusters[1][0],clusters[1][1],marker='^', s=200,color='black')
+plt.scatter(clusters[2][0],clusters[2][1],marker='^', s=200,color='black')
+plt.scatter(clusters[3][0],clusters[3][1],marker='^', s=200,color='black')
+
